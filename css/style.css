@@ -1,0 +1,137 @@
+body{
+    background-color:#E5E5E5;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+header{
+    width:100vw;
+    height:80px;
+    top:0px;
+    position:fixed;
+    background-color:#FFFFFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+header img{
+    width:75px;
+    height:53px;
+    position:absolute;
+    left:22px;
+    top:16px;
+}
+
+header ion-icon{
+    font-size:45px;
+    position:absolute;
+    right:21px;
+    top:18px;
+}
+
+footer{
+    width:100vw;
+    height:80px;
+    position:fixed;
+    background-color:#FFFFFF;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+    bottom:0px;
+}
+
+footer ion-icon{
+    font-size:26px;
+    position:absolute;
+    right:18px;
+    top:27px;
+}
+
+footer input{
+    height:30px;
+    border:none;
+    width:80vw;
+    position:absolute;
+    top:25px;
+    left:17px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+footer input:focus{
+    outline:none;
+}
+
+::placeholder { 
+    opacity: 1;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+  }
+  
+:-ms-input-placeholder { 
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+}
+  
+::-ms-input-placeholder { 
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+  }
+
+main{
+    width:100vw;
+    margin-top:80px;
+    height:calc(100vh - 160px);
+    margin-bottom:80px;
+    overflow-y:scroll;
+}
+
+.msg {
+    display:flex;
+    align-items:center;
+    border-radius: 2px;
+    margin-bottom:4px;
+    word-wrap:normal;
+    word-break:break-word;
+}
+
+.msg:first-child{
+    margin-top:26px;
+}
+.msg p{
+    font-style:normal;
+    font-weight:400;
+    color:#000000;
+    font-size:14px;
+    line-height:16.41px; 
+    margin: 12px 10px 10px 12px;
+
+}
+
+.msg span{
+    font-weight:lighter;
+    color:#AAAAAA;
+}
+
+.msg strong{
+    font-weight:bold;
+}
+
+.status{
+    background-color:#DCDCDC;
+}
+
+.message{
+    background-color:#FFFFFF;
+}
+
+.private_message{
+    background-color:#FFDEDE;
+}
