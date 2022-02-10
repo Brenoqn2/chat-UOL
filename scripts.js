@@ -1,3 +1,29 @@
+let userName = null;
+function enterRoom(){
+    userName = prompt("Digite o seu nome de usuário")
+    let promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants',{name:userName});
+    promise.then(validUsername);
+    promise.catch(invalidUsername);
+}
+
+function validUsername(){
+    setInterval(onlineStatus,5000);
+}
+
+function onlineStatus(){
+    let promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/status',{name:userName});
+    promise.catch(reloadPage);
+}
+
+function reloadPage(){
+    window.location.reload();
+}
+
+function invalidUsername(){
+    alert('Este nome de usuário já está em uso!');
+    enterRoom();
+}
+
 function searchMessages(){
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/uol/messages');
     promise.then(renderMessages);
@@ -53,5 +79,6 @@ function renderMessages(response){
     }
 }
 
+enterRoom();
 searchMessages();
 setInterval(searchMessages,3000);

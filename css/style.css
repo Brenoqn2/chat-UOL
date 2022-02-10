@@ -43,10 +43,6 @@ footer ion-icon{
     top:27px;
 }
 
-footer ion-icon:hover{
-    cursor:pointer;
-}
-
 footer input{
     height:30px;
     border:none;
