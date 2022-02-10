@@ -7,6 +7,8 @@ function enterRoom(){
 }
 
 function validUsername(){
+    searchMessages();
+    setInterval(searchMessages,3000);
     setInterval(onlineStatus,5000);
 }
 
@@ -79,6 +81,18 @@ function renderMessages(response){
     }
 }
 
+function sendMessage(){
+    let message = document.getElementsByTagName('input')[0].value;
+    document.getElementsByTagName('input')[0].value = "";
+    message = {
+        from:userName,
+        to: 'Todos',
+        text:message,
+        type:'message'
+    };
+    let promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',message)
+    promise.then(searchMessages);
+    promise.catch(reloadPage);
+}
+
 enterRoom();
-searchMessages();
-setInterval(searchMessages,3000);
