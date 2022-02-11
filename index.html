@@ -10,10 +10,36 @@
     <body>
         <header>
             <img src="logo.png" />
-            <ion-icon name="people"></ion-icon>
+            <ion-icon name="people" onclick="showSidebar()"></ion-icon>
         </header>
         <main>
         </main>
+        <aside>
+            <div class="background hidden" onclick="hideSidebar()"></div>
+            <section class="hidden">
+                <p><strong>Escolha um contato<br>para enviar mensagem:</strong></p>
+                <div class="container">
+                    <div class="option user selected" onclick="selectUser(this)" id = "Todos">
+                        <ion-icon name="people"></ion-icon>
+                        <p>Todos</p>
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
+                </div>
+                <p><strong>Escolha a visibilidade:</strong></p>
+                <div class="container">
+                    <div class="option visibility selected" onclick="selectVisibility(this)" id="message">
+                        <ion-icon name="lock-open"></ion-icon>
+                        <p>Público</p>
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
+                    <div class="option visibility" onclick="selectVisibility(this)" id="private_message">
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <p>Reservadamente</p>
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
+                </div>
+            </section>
+        </aside>
         <footer>
             <input type="text" placeholder="Escreva aqui...">
             <ion-icon name="paper-plane-outline" onclick="sendMessage()"></ion-icon>
