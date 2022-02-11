@@ -1,7 +1,10 @@
 let userName = null;
 function enterRoom(){
-    userName = prompt("Digite o seu nome de usuário")
+    userName = document.getElementsByTagName('input')[0].value;
     let promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants',{name:userName});
+    document.getElementsByTagName('button')[0].classList.add('hidden');
+    document.getElementsByTagName('input')[0].classList.add('hidden');
+    document.getElementsByClassName('loading')[0].classList.remove('hidden');
     promise.then(validUsername);
     promise.catch(invalidUsername);
 }
@@ -23,7 +26,10 @@ function reloadPage(){
 
 function invalidUsername(){
     alert('Este nome de usuário já está em uso!');
-    enterRoom();
+    userName = null;
+    document.getElementsByTagName('button')[0].classList.remove('hidden');
+    document.getElementsByTagName('input')[0].classList.remove('hidden');
+    document.getElementsByClassName('loading')[0].classList.add('hidden');
 }
 
 function searchMessages(){
@@ -51,7 +57,7 @@ function renderMessages(response){
             if (messages[i].type == 'status'){
                 main.innerHTML += 
                 `
-                <div class = "msg status" id="msg${i}">
+                <div class = "msg status" id="msg${i}" data-identifier="message">
                     <p><span>(${messages[i].time}) </span><strong>${messages[i].from} </strong>${messages[i].text}</p>
                 </div>
                 `
@@ -60,7 +66,7 @@ function renderMessages(response){
             if (messages[i].type == 'message'){
                 main.innerHTML += 
                 `
-                <div class = "msg message" id="msg${i}">
+                <div class = "msg message" id="msg${i}" data-identifier="message">
                     <p><span>(${messages[i].time}) </span><strong>${messages[i].from} </strong>para <strong>${messages[i].to}</strong>: ${messages[i].text}</p>
                 </div>
                 `
@@ -69,7 +75,7 @@ function renderMessages(response){
             if (messages[i].type == 'private_message' && (messages[i].to == userName || messages[i].from == userName)){
                 main.innerHTML += 
                 `
-                <div class = "msg private_message" id="msg${i}">
+                <div class = "msg private_message" id="msg${i}" data-identifier="message">
                     <p><span>(${messages[i].time}) </span><strong>${messages[i].from} </strong>reservadamente para <strong>${messages[i].to}</strong>: ${messages[i].text}</p>
                 </div>
                 `
@@ -83,6 +89,8 @@ function renderMessages(response){
             }
         }
     }
+    let input = document.getElementsByTagName('input')[0];
+    input.addEventListener('keyup',clickSendButton);
 }
 
 let to = "Todos";
@@ -145,7 +153,7 @@ function showUsers(response){
         if (userAlreadyOnline == false){
             container.innerHTML +=
             `
-            <div class="option user" onclick="selectUser(this)" id = ${newUsers[i].name}>
+            <div class="option user" onclick="selectUser(this)" id = ${newUsers[i].name} data-identifier="participant">
                 <ion-icon name="person-circle"></ion-icon>
                 <div>
                     <div class="textBox">${newUsers[i].name}</div>
@@ -191,6 +199,7 @@ function selectUser(element){
 }
 
 function selectVisibility(element){
+    let footer = document.getElementsByTagName('footer')[0];
     if (to != 'Todos'){
         let options = document.getElementsByClassName('visibility');
         for (let i = 0; i < options.length; i++){
@@ -206,7 +215,6 @@ function selectVisibility(element){
             document.getElementById('privateMessageAlert').remove();
         }
         catch(e){};
-        let footer = document.getElementsByTagName('footer')[0];
         footer.innerHTML +=
         `
         <p id = "privateMessageAlert">Enviando para ${to} (reservadamente)</p>
@@ -217,6 +225,12 @@ function selectVisibility(element){
             document.getElementById('privateMessageAlert').remove();
         }
         catch(e){};
+        if (to!='Todos'){
+            footer.innerHTML +=
+            `
+            <p id = "privateMessageAlert">Enviando para ${to}</p>
+            `
+        }
     }
 }
 
@@ -243,4 +257,17 @@ function hideSidebar(){
     clearInterval(refreshUsers);
 }
 
-enterRoom();
+let input = document.getElementsByTagName('input')[0];
+input.addEventListener('keyup',clickEnterButton);
+
+function clickEnterButton(event){
+    if(event.keyCode === 13){
+        document.getElementsByTagName('button')[0].click();
+    }
+}
+
+function clickSendButton(event){
+    if(event.keyCode === 13){
+        sendMessage();
+    }
+}

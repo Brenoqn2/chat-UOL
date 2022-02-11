@@ -56,7 +56,7 @@ footer input{
     line-height: 21px;
 }
 
-footer input:focus{
+input:focus{
     outline:none;
 }
 
@@ -244,4 +244,100 @@ aside .container:last-child{
 
 .hidden{
     display:none;
+}
+
+.loginPage{
+    background-color:#FFFFFFFF;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    height:100vh;
+    position:fixed;
+    z-index:3;
+    top:0px;
+    width:100vw;
+}
+
+.loginPage img{
+    width:130px;
+    height:92px;
+    position:absolute;
+    top:72px;
+}
+
+.loginPage input{
+    position:absolute;
+    top:258px;
+    border: 1px solid #D7D7D7;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    width:260px;
+    height:54px;
+}
+
+input:focus{
+    outline:none;
+}
+
+.loginPage ::placeholder { 
+    opacity: 1;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    color: #AEAEAE;
+    text-align: center;
+  }
+  
+.loginPage :-ms-input-placeholder { 
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    color: #AEAEAE;
+    text-align: center;
+}
+  
+.loginPage ::-ms-input-placeholder { 
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    color:#AEAEAE;
+    text-align: center;
+}
+
+button {
+    width:109px;
+    height:45px;
+    background-color:#E7E7E7;
+    border:none;
+    border-radius:9px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #696969;
+    position:absolute;
+    top:327px;
+}
+
+.loading{
+    position:fixed;
+    top:200px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.loading p {
+    color:#000000;
+    font-size:30px;
+    position:relative;
+    top:-30px;
 }
