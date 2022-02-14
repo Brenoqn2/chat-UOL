@@ -1,5 +1,5 @@
 let userName = null;
-function enterRoom(){
+function enterRoom() {
     userName = document.getElementsByTagName('input')[0].value;
     let promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants',{name:userName});
     document.getElementsByTagName('button')[0].classList.add('hidden');
@@ -9,22 +9,22 @@ function enterRoom(){
     promise.catch(invalidUsername);
 }
 
-function validUsername(){
+function validUsername() {
     searchMessages();
     setInterval(searchMessages,3000);
     setInterval(onlineStatus,5000);
 }
 
-function onlineStatus(){
+function onlineStatus() {
     let promise = axios.post('https://mock-api.driven.com.br/api/v4/uol/status',{name:userName});
     promise.catch(reloadPage);
 }
 
-function reloadPage(){
+function reloadPage() {
     window.location.reload();
 }
 
-function invalidUsername(){
+function invalidUsername() {
     alert('Este nome de usuário já está em uso!');
     userName = null;
     document.getElementsByTagName('button')[0].classList.remove('hidden');
@@ -32,7 +32,7 @@ function invalidUsername(){
     document.getElementsByClassName('loading')[0].classList.add('hidden');
 }
 
-function searchMessages(){
+function searchMessages() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v4/uol/messages');
     promise.then(renderMessages);
 }
@@ -45,16 +45,15 @@ let lastMessage = {
     time:''
 };
 
-function renderMessages(response){
+function renderMessages(response) {
     let messages = response.data;
     let main = document.getElementsByTagName('main')[0];
     let lastServerMessage = messages[messages.length - 1];
-    // check if there is any new message
     if (lastMessage.from != lastServerMessage.from || lastMessage.to != lastServerMessage.to || lastMessage.text != lastServerMessage.text || lastMessage.type != lastServerMessage.type || lastMessage.time != lastServerMessage.time){
         lastMessage = lastServerMessage;
         main.innerHTML = '';
-        for (let i = 0; i < messages.length; i++){
-            if (messages[i].type == 'status'){
+        for (let i = 0; i < messages.length; i++) {
+            if (messages[i].type == 'status') {
                 main.innerHTML += 
                 `
                 <div class = "msg status" id="msg${i}" data-identifier="message">
@@ -63,7 +62,7 @@ function renderMessages(response){
                 `
             }
 
-            if (messages[i].type == 'message'){
+            if (messages[i].type == 'message') {
                 main.innerHTML += 
                 `
                 <div class = "msg message" id="msg${i}" data-identifier="message">
@@ -72,7 +71,7 @@ function renderMessages(response){
                 `
             }
 
-            if (messages[i].type == 'private_message' && (messages[i].to == userName || messages[i].from == userName)){
+            if (messages[i].type == 'private_message' && (messages[i].to == userName || messages[i].from == userName)) {
                 main.innerHTML += 
                 `
                 <div class = "msg private_message" id="msg${i}" data-identifier="message">
@@ -80,10 +79,10 @@ function renderMessages(response){
                 </div>
                 `
             }
-            if (i == (messages.length - 1)){
+            if (i == (messages.length - 1)) {
                 try{
                     let lastAddedMessage = document.getElementById(`msg${i}`);
-                    lastAddedMessage.scrollIntoView();
+                    lastAddedMessage.scrollIntoView({behavior:'smooth',block:'end'});
                 }
                 catch(e){};
             }
@@ -96,7 +95,7 @@ function renderMessages(response){
 let to = "Todos";
 let type = "message";
 
-function sendMessage(){
+function sendMessage() {
     let message = document.getElementsByTagName('input')[0].value;
     document.getElementsByTagName('input')[0].value = "";
     message = {
@@ -112,7 +111,7 @@ function sendMessage(){
 
 let refreshUsers = null;
 
-function showSidebar(){
+function showSidebar() {
     let background = document.getElementsByClassName('background')[0];
     background.classList.remove('hidden');
     let sidebar = document.getElementsByTagName('section')[0];
@@ -121,36 +120,34 @@ function showSidebar(){
     refreshUsers = setInterval(searchUsers,10000)
 }
 
-function searchUsers(){
+function searchUsers() {
     let promise = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
     promise.then(showUsers);
 }
 
-function showUsers(response){
+function showUsers(response) {
     let container = document.getElementsByClassName('container')[0];
     let newUsers = response.data;
     let oldUsers = document.getElementsByClassName('user');
-    // Remove users that disconnected
-    for (let i = 0;i<oldUsers.length;i++){
+    for (let i = 0; i<oldUsers.length; i++) {
         let userOnline = false;
-        for (let j = 0;j<newUsers.length;j++){
+        for (let j = 0; j<newUsers.length; j++) {
             if (oldUsers[i].id == newUsers[j].name || oldUsers[i].id == "Todos"){
                 userOnline = true;
             }
         }
-        if (userOnline == false){
+        if (userOnline == false) {
             oldUsers[i].remove()
         }
     }
-    // Add new users
-    for (let i = 0; i<newUsers.length; i++){
+    for (let i = 0; i<newUsers.length; i++) {
         let userAlreadyOnline = false;
-        for (let j = 0; j<oldUsers.length; j++){
-            if (newUsers[i].name == oldUsers[j].id){
+        for (let j = 0; j<oldUsers.length; j++) {
+            if (newUsers[i].name == oldUsers[j].id) {
                 userAlreadyOnline = true;
             }
         }
-        if (userAlreadyOnline == false){
+        if (userAlreadyOnline == false) {
             container.innerHTML +=
             `
             <div class="option user" onclick="selectUser(this)" id = ${newUsers[i].name} data-identifier="participant">
@@ -165,16 +162,16 @@ function showUsers(response){
     }
 }
 
-function selectUser(element){
+function selectUser(element) {
     let users = document.getElementsByClassName('user');
-    for (let i = 0; i < users.length; i++){
-        if (users[i].classList.contains('selected')){
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].classList.contains('selected')) {
             users[i].classList.remove('selected');
         }
     }
     to = element.id;
     element.classList.add('selected');
-    if (to == 'Todos'){
+    if (to == 'Todos') {
         lockPublicVisibility();
     }
     else{ 
@@ -183,7 +180,7 @@ function selectUser(element){
             document.getElementById('privateMessageAlert').remove();
         }
         catch(e){};
-        if (type == 'private_message'){
+        if (type == 'private_message') {
             footer.innerHTML +=
             `
             <p id = "privateMessageAlert">Enviando para ${to} (reservadamente)</p>
@@ -198,23 +195,23 @@ function selectUser(element){
     }   
 }
 
-function selectVisibility(element){
+function selectVisibility(element) {
     let footer = document.getElementsByTagName('footer')[0];
-    if (to != 'Todos'){
+    if (to != 'Todos') {
         let options = document.getElementsByClassName('visibility');
-        for (let i = 0; i < options.length; i++){
-            if (options[i].classList.contains('selected')){
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].classList.contains('selected')) {
                 options[i].classList.remove('selected');
             }
         }
         type = element.id;
         element.classList.add('selected');
     }
-    if (type =='private_message'){
-        try{
+    if (type =='private_message') {
+        try {
             document.getElementById('privateMessageAlert').remove();
         }
-        catch(e){};
+        catch (e) {};
         footer.innerHTML +=
         `
         <p id = "privateMessageAlert">Enviando para ${to} (reservadamente)</p>
@@ -234,22 +231,22 @@ function selectVisibility(element){
     }
 }
 
-function lockPublicVisibility(){
+function lockPublicVisibility() {
     let options = document.getElementsByClassName('visibility');
-    for (let i = 0; i < options.length; i++){
-        if (options[i].classList.contains('selected')){
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].classList.contains('selected')) {
             options[i].classList.remove('selected');
         }
     }
     document.getElementById('message').classList.add('selected');
     type='message'
-    try{
+    try {
         document.getElementById('privateMessageAlert').remove();
     }
-    catch(e){};
+    catch (e) {};
 }
 
-function hideSidebar(){
+function hideSidebar() {
     let background = document.getElementsByClassName('background')[0];
     background.classList.add('hidden');
     let sidebar = document.getElementsByTagName('section')[0];
@@ -260,13 +257,13 @@ function hideSidebar(){
 let input = document.getElementsByTagName('input')[0];
 input.addEventListener('keyup',clickEnterButton);
 
-function clickEnterButton(event){
-    if(event.keyCode === 13){
+function clickEnterButton(event) {
+    if(event.keyCode === 13) {
         document.getElementsByTagName('button')[0].click();
     }
 }
 
-function clickSendButton(event){
+function clickSendButton(event) {
     if(event.keyCode === 13){
         sendMessage();
     }
